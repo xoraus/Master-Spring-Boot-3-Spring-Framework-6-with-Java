@@ -2,7 +2,7 @@
 
 These are my lecture notes that I created/generated while learning about Spring and Spring Boot
 
-### Section 1: [Getting Started Master Spring Framework and Spring Boot]()
+### Section 1: [Getting Started Master Spring Framework and Spring Boot](Section-2-Getting-Started-with-Java-Spring-Framework.html)
 ### Section 2: [Getting Started with Java Spring Framework]() 
 ### Section 3: [Using Spring Framework to Create and Manage Your Java Objects]() 
 ### Section 4: [Exploring Spring Framework Advanced Features]() 

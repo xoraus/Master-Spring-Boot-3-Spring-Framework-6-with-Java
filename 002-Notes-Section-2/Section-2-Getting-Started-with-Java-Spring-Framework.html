@@ -1,0 +1,1470 @@
+<html>
+  <head>
+    <style>
+      .Portal {
+        border-color: lightblue;
+        border-style: solid;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      Section 2: Getting Started with Java Spring Framework 
+    </h1>
+    <br/>
+    <ul>
+        <li><b>Step 01 - Understanding the Need for Java Spring Framework</b> 
+            <ul>
+                <li>Application Architecture Evolution:
+                    <ul>
+                        <li>Web applications -&gt; Web services -&gt; REST APIs -&gt; Full-stack applications -&gt; Microservices -&gt; Cloud Deployment</li>
+                        <li>Frameworks used: Spring, Spring MVC, Hibernate, Spring Security, Spring Data, Spring Cloud, etc.</li>
+                    </ul>
+                </li>
+                <li>Top 2 Frameworks for Building Great Applications:
+                    <ul>
+                        <li>Spring Framework: provides essential features for building easily maintainable applications
+                            <ul>
+                                <li>Key features: Dependency injection, autowiring</li>
+                                <li>Reduces code needed for production-ready applications:
+                                    <ul>
+                                        <li>Before Spring: 1000 lines</li>
+                                        <li>With Spring: 700 lines</li>
+                                        <li>With Spring Boot: 400 lines</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Spring Boot: simplifies using Spring Framework</li>
+                    </ul>
+                </li>
+                <li>Learning Spring Framework:
+                    <ul>
+                        <li>Beginners struggle with abstract terminology: tight coupling, loose coupling, dependency injection, IOC container, application context, Spring beans, autowiring, components</li>
+                        <li>This course aims to make Spring Framework easy to understand with hands-on examples</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 02 - Getting Started with Java Spring Framework</b> 
+            <ul>
+                <li>Key points:
+                    <ul>
+                        <li>Spring and Spring Boot can be used to build web applications, REST APIs, full-stack applications, microservices, and more.</li>
+                        <li>Spring Framework provides core features for easily buildable and maintainable applications.</li>
+                        <li>Spring Boot simplifies using Spring Framework and allows for quick debugging.</li>
+                        <li>This section focuses on understanding Spring Framework through hands-on practice.</li>
+                    </ul>
+                </li>
+                <li>Goals:
+                    <ul>
+                        <li>Learn core features of Spring Framework</li>
+                        <li>Build a loosely coupled &quot;Hello World&quot; gaming app using modern Spring approach</li>
+                    </ul>
+                </li>
+                <li>Learning approach:
+                    <ul>
+                        <li>Iterative design:
+                            <ul>
+                                <li>Iteration 1: Tightly coupled Java code with GameRunner class.</li>
+                                <li>Iteration 2: Introduce loose coupling with Java interfaces (GamingConsole).</li>
+                                <li>Iteration 3: Spring Framework integration (Loose coupling level 1) with Spring beans and object management.</li>
+                                <li>Iteration 4: Spring annotations for loose coupling level 2 (Spring handles object creation, management, and auto-wiring).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Terminology:
+                    <ul>
+                        <li>Tight coupling</li>
+                        <li>Loose coupling</li>
+                        <li>IOC container</li>
+                        <li>Application context</li>
+                        <li>Spring beans</li>
+                        <li>Autowiring</li>
+                        <li>Components</li>
+                        <li>Dependency injection</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 03 - Creating a New Spring Framework Project with Maven and Java</b> 
+            <ul>
+                <li>Use Spring Initializr (start.spring.io) to create a Spring project.</li>
+                <li>Choose Maven as the build tool and Java as the language.</li>
+                <li>Select the desired Spring Boot version (3.0.0 RC1 in this case).</li>
+                <li>Provide a Group ID (com.in28minutes) and Artifact ID (learn-spring-framework).</li>
+                <li>Choose the latest available Java version (Java 17 in this case).</li>
+                <li>Generate the project and download the zip file.</li>
+                <li>Unzip the downloaded file to a local folder.</li>
+                <li>Launch Eclipse and choose a workspace.</li>
+                <li>Import the project as an existing Maven project.</li>
+                <li>Navigate to the root directory of the unzipped project.</li>
+                <li>Click &quot;Finish&quot; to import the project.</li>
+                <li>Wait 5-10 minutes for the import to complete (longer for first-time import with this Spring version).</li>
+                <li>Ensure you&#39;re using the latest Eclipse IDE for Java and Web Developers.</li>
+                <li>Successful import will show a project structure with folders for Java source files, resources, and test code.</li>
+            </ul>
+        </li>
+        <li><b>Step 04 - Getting Started with Java Gaming Application</b> 
+            <ul>
+                <li>Tight Coupling: The current implementation is considered tightly coupled because the <b>GameRunner</b> class directly creates instances of specific games (e.g., <b>MarioGame</b>). This can lead to inflexibility when introducing new games.</li>
+                <li>File 1: LearnSpringFrameworkApplication.java</li>
+                <li><pre ><code >package com.in28minutes.learnspringframework;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class LearnSpringFrameworkApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(LearnSpringFrameworkApplication.class, args);
+	}
+}</code></pre></li>
+                <li>File 2: GameRunner.java</li>
+                <li><pre ><code >package com.in28minutes.learnspringframework.game;
+
+public class GameRunner {
+	MarioGame game;
+	
+	public GameRunner(MarioGame game) {
+		this.game = game;
+	}
+
+	public void run() {
+		System.out.println(&quot;Running game: &quot; + game);
+		game.up();
+		game.down();
+		game.left();
+		game.right();
+	}
+}</code></pre></li>
+                <li>File 3: MarioGame.java</li>
+                <li><pre ><code >package com.in28minutes.learnspringframework.game;
+
+public class MarioGame {
+	public void up() {
+		System.out.println(&quot;Jump&quot;);
+	}
+
+	public void down() {
+		System.out.println(&quot;Go into a hole&quot;);
+	}
+	
+	public void left() {
+		System.out.println(&quot;Go back&quot;);
+	}
+
+	public void right() {
+		System.out.println(&quot;Accelerate&quot;);
+	}
+}</code></pre></li>
+            </ul>
+        </li>
+        <li><b>Step 05 - Understanding Loose Coupling and Tight Coupling</b> 
+            <ul>
+                <li><b>1. Definition of Tight Coupling:</b>
+                    <ul>
+                        <li>Tight coupling refers to a situation where components or classes are highly dependent on each other, and making a change in one requires changes in the others.</li>
+                        <li><b>Code Example:</b> The current implementation in <q>AppGamingBasicJava</q> shows tight coupling, where the <q>GameRunner</q> class directly creates and runs a specific game (<q>MarioGame</q>).</li>
+                    </ul>
+                </li>
+                <li><b>2. Scenario: Adding a New Game (Super Contra):</b>
+                    <ul>
+                        <li><b>Code Example:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">// Adding Super Contra game
+SuperContraGame superContraGame = new SuperContraGame();
+gameRunner.run(superContraGame);</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Challenge:</b> The <q>GameRunner</q> class is tightly coupled to the <q>MarioGame</q>, and modifying it to run a different game (<q>SuperContraGame</q>) requires manual changes in the code.</li>
+                    </ul>
+                </li>
+                <li><b>3. Understanding Coupling:</b>
+                    <ul>
+                        <li><b>Explanation:</b> Coupling measures the extent of effort needed to change something. In the context of software development, it&#39;s crucial to minimize coupling to facilitate easier adaptation to changes.</li>
+                        <li><b>Real-world Analogies:</b>
+                            <ul>
+                                <li><b>Car Analogy:</b> An engine is tightly coupled to a car; changing it requires significant effort. In contrast, a wheel is loosely coupled; changing a flat tire is relatively easy.</li>
+                                <li><b>Laptop vs. Computer:</b> A laptop is loosely coupled; it can be taken anywhere. A computer, being less portable, is more tightly coupled to a specific location.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>4. Importance of Loose Coupling in Software:</b>
+                    <ul>
+                        <li><b>Explanation:</b> In software development, where change is constant, loose coupling is vital. Business requirements, frameworks, and code evolve, and loose coupling aims to enable functional changes with minimal code modifications.</li>
+                        <li><b>Current Challenge:</b> The <q>GameRunner</q> class is tightly coupled to a specific game, requiring manual changes for each new game.</li>
+                        <li><b>Objective:</b> Aim for loose coupling to enhance flexibility and adaptability in the face of changing requirements.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 06 - Introducing Java Interface to Make App Loosely Coupled</b> 
+            <ul>
+                <li><b>1. Goal of Iteration Two:</b>
+                    <ul>
+                        <li><b>Objective:</b> Introduce loose coupling in the <q>GameRunner</q> class using interfaces. Create a common <q>GamingConsole</q> interface for game classes to implement.</li>
+                    </ul>
+                </li>
+                <li><b>2. Introduction to Loose Coupling:</b>
+                    <ul>
+                        <li><b>Explanation:</b> The focus is on reducing tight coupling in the code. The goal is to make the <q>GameRunner</q> class interact with an interface (<q>GamingConsole</q>) rather than directly with specific game classes (e.g., <q>MarioGame</q>, <q>SuperContraGame</q>).</li>
+                    </ul>
+                </li>
+                <li><b>3. Creating the GamingConsole Interface:</b>
+                    <ul>
+                        <li><b>Code Example:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">// File: GamingConsole.java (Interface)
+public interface GamingConsole {
+    void up();
+    void down();
+    void left();
+    void right();
+}</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b> The interface defines common actions (<q>up</q>, <q>down</q>, <q>left</q>, <q>right</q>) that game classes should implement.</li>
+                    </ul>
+                </li>
+                <li><b>4. Making SuperContraGame Implement the Interface:</b>
+                    <ul>
+                        <li><b>Code Example:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">// File: SuperContraGame.java
+public class SuperContraGame implements GamingConsole {
+    // Implementation of interface methods
+}</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b> SuperContraGame now implements the <q>GamingConsole</q> interface, providing the required methods.</li>
+                    </ul>
+                </li>
+                <li><b>5. Updating GameRunner to Use the Interface:</b>
+                    <ul>
+                        <li><b>Code Example:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">// File: GameRunner.java
+public class GameRunner {
+    private GamingConsole game;
+    
+    public GameRunner(GamingConsole game) {
+        this.game = game;
+    }
+    
+    public void runGame() {
+        System.out.println(&quot;Running game: &quot; + game.getClass().getSimpleName());
+        game.up();
+        game.down();
+        game.left();
+        game.right();
+    }
+}</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b> The <q>GameRunner</q> class now uses the <q>GamingConsole</q> interface. The specific game instance is passed through the constructor, promoting loose coupling.</li>
+                    </ul>
+                </li>
+                <li><b>6. Observations:</b>
+                    <ul>
+                        <li><b>Advantages of Loose Coupling:</b>
+                            <ul>
+                                <li>Changing games doesn&#39;t require modifying the <q>GameRunner</q> class.</li>
+                                <li>Introduction of the interface allows flexibility in game switching.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>7. Exercise: Creating a PacMan Game:</b>
+                    <ul>
+                        <li><b>Task:</b>
+                            <ul>
+                                <li>Create a new game class for PacMan.</li>
+                                <li>Implement the <q>GamingConsole</q> interface in the PacMan game.</li>
+                                <li>Run the PacMan game using the <q>GameRunner</q> class.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>8. Introducing the Spring Framework:</b>
+                    <ul>
+                        <li><b>Next Steps:</b> The lecture hints at bringing in the Spring framework in the next step to enhance loose coupling further.</li>
+                    </ul>
+                </li>
+                <li><b>9. Summary:</b>
+                    <ul>
+                        <li><b>Key Concepts:</b>
+                            <ul>
+                                <li>Introduction of interfaces for loose coupling.</li>
+                                <li>Advantages of interfaces in decoupling specific implementations.</li>
+                                <li>The <q>GameRunner</q> class is no longer tied to a specific game, promoting flexibility.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 07 - Bringing in Spring Framework to Make Java App Loosely Coupled</b> 
+            <ul>
+                <li><b>1. Current State of Code:</b>
+                    <ul>
+                        <li><b>Code Summary:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">// Creating Pacman game
+PacmanGame pacmanGame = new PacmanGame();
+
+// Creating Game Runner and passing Pacman game as a dependency
+GameRunner gameRunner = new GameRunner(pacmanGame);</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>The current code involves manual creation of objects (<q>PacmanGame</q> and <q>GameRunner</q>).</li>
+                                <li>The <q>PacmanGame</q> instance is passed as a dependency to the <q>GameRunner</q> constructor.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>2. Understanding Dependency Injection:</b>
+                    <ul>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Dependency Injection (DI) involves providing the required dependencies (objects or services) to a class rather than having the class create them.</li>
+                                <li>Dependencies can be injected through constructor parameters, setter methods, or directly into fields.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>3. Significance of Dependency Injection:</b>
+                    <ul>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Dependency Injection simplifies object creation and promotes loose coupling.</li>
+                                <li>In enterprise applications, managing dependencies manually can become complex as the number of classes and dependencies increases.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>4. Wiring Dependencies:</b>
+                    <ul>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Wiring dependencies involves connecting or injecting required dependencies into a class.</li>
+                                <li>In the context of the <q>GameRunner</q> class, the game instance (<q>PacmanGame</q> or any other game) is a dependency that needs to be injected.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>5. Introduction to Spring Framework:</b>
+                    <ul>
+                        <li><b>Objective:</b>
+                            <ul>
+                                <li>Instead of manually creating and wiring objects, the lecture introduces the idea of using the Spring Framework to manage these tasks.</li>
+                                <li>Spring will handle object creation and dependency injection.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>6. Spring&#39;s Role in Dependency Management:</b>
+                    <ul>
+                        <li><b>Experiment:</b>
+                            <ul>
+                                <li>Instead of manually managing object creation and wiring, the lecture suggests letting the Spring Framework handle these tasks.</li>
+                                <li>Spring will manage the creation of objects and inject dependencies automatically.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>7. Spring Managing Simple Objects:</b>
+                    <ul>
+                        <li><b>Example:</b>
+                            <ul>
+                                <li>Before applying Spring to the <q>GameRunner</q> scenario, the lecture proposes starting with a simpler example.</li>
+                                <li>Spring will manage objects like <q>Person</q> and their related attributes (<q>name</q>, <q>age</q>, <q>address</q>).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>Current Challenge:</b>
+                    <ul>
+                        <li>Manual management of object creation and dependencies.</li>
+                    </ul>
+                </li>
+                <li><b>Objective:</b>
+                    <ul>
+                        <li>Explore how the Spring Framework can simplify and automate the process.</li>
+                    </ul>
+                </li>
+                <li><b>Key Concepts:</b>
+                    <ul>
+                        <li>Dependency Injection (DI).</li>
+                        <li>Significance of loose coupling.</li>
+                        <li>Spring Framework&#39;s role in managing object creation and dependencies.</li>
+                    </ul>
+                </li>
+                <li>Note: The lecture sets the stage for transitioning to Spring and emphasizes the benefits of dependency injection in simplifying code and promoting loose coupling.*</li>
+            </ul>
+        </li>
+        <li><b>Step 08 - Your First Java Spring Bean and Launching Java Spring Configuration</b> 
+            <ul>
+                <li><b>1. Objective:</b>
+                    <ul>
+                        <li><b>Code Summary:</b>
+                            <ul>
+                                <li>Creating a Spring bean named &quot;name&quot; and having the Spring framework manage it.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>2. Code Transition:</b>
+                    <ul>
+                        <li><b>Code Actions:</b>
+                            <ul>
+                                <li>Renamed the existing class to <q>App01GamingBasicJava</q>.</li>
+                                <li>Created a new class named <q>App02HelloWorldSpring</q>.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>3. Initial Setup:</b>
+                    <ul>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Removed unnecessary code from <q>App02HelloWorldSpring</q>.</li>
+                                <li>The focus is on creating a Spring bean and understanding the Spring configuration.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>4. Configuration Class:</b>
+                    <ul>
+                        <li><b>Code:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">@Configuration
+public class HelloWorldConfiguration {
+
+    @Bean
+    public String name() {
+        return &quot;Ranga&quot;;
+    }
+}</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li><q>@Configuration</q>: Indicates that this class declares one or more bean methods.</li>
+                                <li><q>@Bean</q>: Indicates that the method produces a bean managed by the Spring container.</li>
+                                <li>Created a method named <q>name</q> that returns a string, with the bean name as &quot;name&quot; and value as &quot;Ranga.&quot;</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>5. Spring Context Creation:</b>
+                    <ul>
+                        <li><b>Code:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(HelloWorldConfiguration.class);</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Launched a Spring context using the configuration class <q>HelloWorldConfiguration</q>.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>6. Retrieving the Bean:</b>
+                    <ul>
+                        <li><b>Code:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">String name = context.getBean(&quot;name&quot;, String.class);
+System.out.println(name);</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Used the Spring context to retrieve the bean named &quot;name&quot; and printed its value.</li>
+                            </ul>
+                        </li>
+                        <li><b>Output:</b>
+                            <ul>
+                                <li><pre ><code >Ranga</code></pre></li>
+                                <li><b>Explanation:</b>
+                                    <ul>
+                                        <li>The Spring framework successfully managed the bean named &quot;name&quot; with the value &quot;Ranga.&quot;</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>7. Understanding Terminology:</b>
+                    <ul>
+                        <li><b>Terminology:</b>
+                            <ul>
+                                <li><b>Spring Context:</b> The environment in which Spring beans are managed.</li>
+                                <li><b>Spring Container:</b> Another term for the Spring context.</li>
+                                <li><b>Bean:</b> An object managed by the Spring framework.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>Summary:</b> 
+                    <ul>
+                        <li><b>Current Achievement:</b>
+                            <ul>
+                                <li>Successfully created and managed a simple Spring bean named &quot;name.&quot;</li>
+                            </ul>
+                        </li>
+                        <li><b>Next Objective:</b>
+                            <ul>
+                                <li>Explore more aspects of Spring framework.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>Key Concepts:</b>
+                    <ul>
+                        <li><q>@Configuration</q> and <q>@Bean</q> annotations.</li>
+                        <li>Spring context and bean management.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 09 - Creating More Java Spring Beans in Spring Java Configuration File</b> 
+            <ul>
+                <li><b>1. Objective:</b>
+                    <ul>
+                        <li><b>Code Summary:</b>
+                            <ul>
+                                <li>Creating and managing multiple Spring beans of different types.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>2. Recap:</b>
+                    <ul>
+                        <li><b>Previous Step:</b>
+                            <ul>
+                                <li>Successfully created a Spring context in the HelloWorldConfiguration class.</li>
+                                <li>Managed a string bean (&quot;name&quot;) and retrieved it using the Spring context.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>3. Creating More Beans:</b>
+                    <ul>
+                        <li><b>Code:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">@Bean
+public int age() {
+    return 15;
+}
+
+@Bean
+public Person person() {
+    return new Person(&quot;Ravi&quot;, 20);
+}
+
+@Bean
+public Address address() {
+    return new Address(&quot;Baker Street&quot;, &quot;London&quot;);
+}</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Added more beans to HelloWorldConfiguration (int, Person, and Address).</li>
+                                <li>Demonstrated the creation of a Person using the new JDK 16 feature - records.</li>
+                                <li>Used @Bean annotations to manage these objects.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>4. Record Feature:</b> 
+                    <ul>
+                        <li></li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Introduced the concept of records in Java (JDK 16).</li>
+                                <li>Records simplify the creation of Java beans by automatically generating methods like toString, equals, hash code, etc.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>5. Retrieving Beans:</b>
+                    <ul>
+                        <li><b>Code:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">System.out.println(context.getBean(&quot;age&quot;, Integer.class));
+System.out.println(context.getBean(&quot;person&quot;, Person.class));
+System.out.println(context.getBean(&quot;address&quot;, Address.class));</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Demonstrated the retrieval of beans from the Spring context.</li>
+                                <li>Used context.getBean() with the respective bean names.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>6. Exercise:</b>
+                    <ul>
+                        <li><b>Task:</b>
+                            <ul>
+                                <li>Encouraged viewers to create a record for Address.</li>
+                                <li>Added an example to create an Address bean in HelloWorldConfiguration.</li>
+                                <li>Ran the application to verify the successful addition of the Address bean.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>7. Exploring Spring Foundation:</b>
+                    <ul>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Laid the foundation for understanding more advanced features of the Spring framework.</li>
+                                <li>Highlighted the significance of managing various types of objects in the Spring context.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>8. Upcoming Topics:</b>
+                    <ul>
+                        <li><b>Next Steps:</b>
+                            <ul>
+                                <li>Exploring more advanced Spring features.</li>
+                                <li>Understanding the importance of dependency injection.</li>
+                                <li>Diving into the Spring framework&#39;s capabilities beyond basic bean management.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>9. Summary:</b>
+                    <ul>
+                        <li><b>Current Achievement:</b>
+                            <ul>
+                                <li>Successfully managed multiple beans using the Spring framework.</li>
+                            </ul>
+                        </li>
+                        <li><b>Next Objective:</b>
+                            <ul>
+                                <li>Delving into more advanced Spring concepts.</li>
+                            </ul>
+                        </li>
+                        <li><b>Key Concepts:</b>
+                            <ul>
+                                <li>Utilizing the record feature for creating concise Java beans.</li>
+                                <li>Managing and retrieving multiple types of beans with Spring.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 10 - Implementing Auto Wiring in Spring Framework Java Configuration File</b> 
+            <ul>
+                <li><b>1. Objective:</b>
+                    <ul>
+                        <li><b>Code Summary:</b>
+                            <ul>
+                                <li>Exploring advanced bean configurations in Spring.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>2. Customizing Bean Names:</b>
+                    <ul>
+                        <li><b>Code:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">@Bean(name = &quot;address2&quot;)
+public Address address() {
+    return new Address(&quot;Baker Street&quot;, &quot;London&quot;);
+}</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Demonstrated how to customize bean names using the <q>name</q> attribute in the <q>@Bean</q> annotation.</li>
+                                <li>Used an example of renaming the &quot;address&quot; bean to &quot;address2.&quot;</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>3. Retrieving Beans:</b>
+                    <ul>
+                        <li><b>Code:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">context.getBean(&quot;address2&quot;, Address.class);
+context.getBean(Address.class);</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Illustrated different approaches to retrieve beans from the Spring context.</li>
+                                <li>Showed usage of both bean name and bean type (class).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>4. Creating Beans with Relationships:</b>
+                    <ul>
+                        <li><b>Code:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">@Bean
+public Person person2MethodCall() {
+    return new Person(name(), age());
+}
+
+@Bean
+public Person person3Parameters(@Value(&quot;${name}&quot;) String name, @Value(&quot;${age}&quot;) int age, @Qualifier(&quot;address2&quot;) Address address) {
+    return new Person(name, age, address);
+}</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Introduced the concept of creating beans with relationships to existing beans.</li>
+                                <li>Demonstrated two approaches: method calls (<q>person2MethodCall</q>) and constructor parameters (<q>person3Parameters</q>).</li>
+                                <li>Utilized existing beans (name, age, address2) to create a new bean (person3Parameters).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>5. Troubleshooting Bean Conflicts:</b>
+                    <ul>
+                        <li><b>Issue:</b>
+                            <ul>
+                                <li>Encountered an issue when attempting to retrieve a bean by type (<q>Address.class</q>) due to multiple matching beans.</li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Addressed the issue by commenting out the conflicting line temporarily.</li>
+                                <li>Prompted viewers to contemplate the cause of the error and hinted at a solution to be discussed in subsequent steps.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>6. Summary of Learnings:</b>
+                    <ul>
+                        <li><b>Custom Bean Names:</b>
+                            <ul>
+                                <li>Highlighted the ability to assign custom names to beans.</li>
+                            </ul>
+                        </li>
+                        <li><b>Bean Retrieval:</b>
+                            <ul>
+                                <li>Showed various methods for retrieving beans using both names and types.</li>
+                            </ul>
+                        </li>
+                        <li><b>Creating Beans with Relationships:</b>
+                            <ul>
+                                <li>Explored two approaches to create beans with relationships to existing beans.</li>
+                            </ul>
+                        </li>
+                        <li><b>Challenges Faced:</b>
+                            <ul>
+                                <li>Encountered and acknowledged an issue with multiple matching beans.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>7. Concluding Notes:</b>
+                    <ul>
+                        <li><b>Achievement:</b>
+                            <ul>
+                                <li>Successfully configured and managed beans with advanced features.</li>
+                            </ul>
+                        </li>
+                        <li><b>Anticipated Challenges:</b>
+                            <ul>
+                                <li>Addressing the issue of multiple matching beans.</li>
+                            </ul>
+                        </li>
+                        <li><b>Key Takeaways:</b>
+                            <ul>
+                                <li>Advanced Spring concepts for bean configuration and relationships.</li>
+                                <li>Troubleshooting and resolving conflicts in bean definitions.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 11 - Questions about Spring Framework - What will we learn?</b> 
+            <ul>
+                <li><b>Instructor&#39;s Q&amp;A Session: Addressing Key Questions</b> 
+                    <ul>
+                        <li>From PPT</li>
+                    </ul>
+                </li>
+                <li><b>1. Spring Container and Context:</b>
+                    <ul>
+                        <li><b>Definition:</b>
+                            <ul>
+                                <li><b>Spring Container:</b> It&#39;s a runtime environment that manages the lifecycle of Spring beans.</li>
+                                <li><b>Spring Context:</b> A specific type of container that represents the context in which Spring beans exist.</li>
+                                <li><b>IOC Container (Inversion of Control):</b> A concept where the container manages the objects and their dependencies.</li>
+                                <li><b>ApplicationContext:</b> A specific implementation of the Spring container providing additional features.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>2. Java Bean vs. Spring Bean:</b>
+                    <ul>
+                        <li><b>Java Bean:</b>
+                            <ul>
+                                <li>A reusable software component following certain conventions (e.g., public getters and setters).</li>
+                                <li>Typically used in Java development, but not explicitly tied to the Spring Framework.</li>
+                            </ul>
+                        </li>
+                        <li><b>Spring Bean:</b>
+                            <ul>
+                                <li>An object managed by the Spring container, often defined by annotations or XML configurations.</li>
+                                <li>Enjoys benefits like dependency injection and lifecycle management provided by Spring.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>3. Listing All Managed Beans:</b>
+                    <ul>
+                        <li><b>Approaches:</b>
+                            <ul>
+                                <li>Use the <q>getBeansOfType</q> method in the <q>ApplicationContext</q> to retrieve all beans of a specific type.</li>
+                                <li>Consider using Spring Boot Actuator, providing an endpoint (<q>/beans</q>) to list managed beans.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>4. Handling Multiple Matching Beans:</b>
+                    <ul>
+                        <li><b>Issue:</b>
+                            <ul>
+                                <li>When searching for a bean by type (<q>address.class</q>), conflicts may arise if multiple matching beans are available.</li>
+                            </ul>
+                        </li>
+                        <li><b>Resolution:</b>
+                            <ul>
+                                <li>Prefer using the <q>@Primary</q> annotation on one of the beans to indicate the primary choice.</li>
+                                <li>Explicitly use the <q>@Qualifier</q> annotation in the injection point to specify the desired bean.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>5. Spring&#39;s Role in Object Creation:</b>
+                    <ul>
+                        <li><b>Question:</b>
+                            <ul>
+                                <li>If Spring manages objects, why are we still writing code to create them?</li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>While Spring is capable of managing objects, developers often write code for more complex configurations or custom initialization logic.</li>
+                                <li>Spring can automatically create objects for you, and we&#39;ll explore that in upcoming steps.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>7. Upcoming Topics:</b>
+                    <ul>
+                        <li><b>Anticipated Learning:</b>
+                            <ul>
+                                <li>Answers to questions raised.</li>
+                                <li>Further exploration of Spring concepts, including automatic object creation.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>8. Closing Remarks:</b>
+                    <ul>
+                        <li><b>Encouragement:</b>
+                            <ul>
+                                <li>Encourages learners to continue the learning journey.</li>
+                                <li>Promises answers to pending questions and more clarity on Spring concepts.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 12 - Exploring Spring IOC Container Application Context &amp; Bean Factory</b> 
+            <ul>
+                <li><b>1. Definition:</b>
+                    <ul>
+                        <li><b>Spring Container:</b> Manages Spring beans and their lifecycle.</li>
+                        <li><b>Spring Context:</b> Another term for the Spring container.</li>
+                        <li><b>Inputs:</b> Java classes and configuration files.</li>
+                        <li><b>Output:</b> A runtime system with a Spring context managing configured beans.</li>
+                    </ul>
+                </li>
+                <li><b>2. Configuration Components:</b>
+                    <ul>
+                        <li><b>Java Classes:</b> User-created classes defining application logic.</li>
+                        <li><b>Configuration File (HelloWorldConfiguration):</b> Contains bean definitions.</li>
+                    </ul>
+                </li>
+                <li><b>3. Runtime System Creation:</b>
+                    <ul>
+                        <li><b>Process:</b>
+                            <ul>
+                                <li>Users create Java classes and a configuration file.</li>
+                                <li>Inversion of Control (IOC) container creates a runtime system.</li>
+                                <li>The runtime system includes a Spring context managing configured beans.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>4. Terminology:</b>
+                    <ul>
+                        <li><b>Interchangeable Terms:</b>
+                            <ul>
+                                <li>Spring Container = Spring Context = IOC Container.</li>
+                                <li>Used interchangeably to describe the runtime environment created by the IOC container.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>5. Types of IOC Containers:</b>
+                    <ul>
+                        <li><b>BeanFactory:</b>
+                            <ul>
+                                <li>Basic Spring container.</li>
+                            </ul>
+                        </li>
+                        <li><b>ApplicationContext:</b>
+                            <ul>
+                                <li>Advanced container with enterprise-specific features.</li>
+                                <li>Recommended for most enterprise applications.</li>
+                                <li>Used in scenarios like web applications, web services, REST API, and microservices.</li>
+                                <li>Provides additional features like internationalization, Spring AOP integration, etc.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>6. ApplicationContext Usage:</b>
+                    <ul>
+                        <li><b>Recommendation:</b>
+                            <ul>
+                                <li>ApplicationContext is commonly used in enterprise applications.</li>
+                                <li>Offers more features, making it suitable for various scenarios.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>7. Instructor&#39;s Experience:</b>
+                    <ul>
+                        <li><b>Practical Insight:</b>
+                            <ul>
+                                <li>Over two decades of using Spring framework.</li>
+                                <li>BeanFactory rarely used directly in practical applications.</li>
+                                <li>ApplicationContext recommended for its extensive features.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>8. Conclusion:</b>
+                    <ul>
+                        <li><b>Overview:</b> A high-level understanding of the Spring container.</li>
+                        <li><b>Upcoming Topics:</b> Further exploration of Spring containers in the course.</li>
+                    </ul>
+                </li>
+                <li><b>9. Note:</b>
+                    <ul>
+                        <li><b>Memory Constraints Exception:</b>
+                            <ul>
+                                <li>BeanFactory might be considered in IoT applications with severe memory constraints.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 13 - Exploring Java Bean vs POJO vs VS Spring Bean</b> 
+            <ul>
+                <li><b>1. POJO (Plain Old Java Object):</b>
+                    <ul>
+                        <li><b>Definition:</b> Any Java object without specific constraints.</li>
+                        <li><b>Example:</b> Simple class with member variables and a <q>toString</q> method.</li>
+                        <li><b>Constraints:</b> No specific constraints; can have any structure.</li>
+                        <li><b>Usage:</b> Most classes created in the course are POJOs.</li>
+                    </ul>
+                </li>
+                <li><b>2. Java Bean:</b>
+                    <ul>
+                        <li><b>Definition:</b> A Java class adhering to specific constraints.</li>
+                        <li><b>Constraints:</b>
+                            <ul>
+                                <li>Public no-argument constructor.</li>
+                                <li>Getters and setters for properties.</li>
+                                <li>Implements the <q>Serializable</q> interface.</li>
+                            </ul>
+                        </li>
+                        <li><b>Example:</b> Class explicitly following constraints.
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">public class JavaBean implements Serializable {
+    public JavaBean() {}
+    // Getters and setters generated
+}</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Historical Context:</b> Originated with Enterprise Java Beans (EJBs), which introduced the concept of Java Beans.</li>
+                    </ul>
+                </li>
+                <li><b>3. Spring Bean:</b>
+                    <ul>
+                        <li><b>Definition:</b> A Java object managed by the Spring framework.</li>
+                        <li><b>Management:</b> Spring uses IOC container (BeanFactory or ApplicationContext) to manage objects.</li>
+                        <li><b>Usage:</b> Objects configured and managed by Spring.</li>
+                        <li><b>Distinction:</b> Any object managed by the IOC container is a Spring Bean.</li>
+                    </ul>
+                </li>
+                <li><b>4. Comparison:</b>
+                    <ul>
+                        <li>| Criteria                | POJO                   | Java Bean                    | Spring Bean                            |</li>
+                        <li>|-------------------------|------------------------|------------------------------|----------------------------------------|</li>
+                        <li>| <b>Constraints</b>         | None                   | Public no-arg constructor,&lt;br&gt; getters and setters,&lt;br&gt; implements Serializable | Managed by Spring IOC container        |</li>
+                        <li>| <b>Creation</b>            | No specific rules      | Adheres to Java Bean constraints | Created and managed by Spring framework |</li>
+                        <li>| <b>Historical Context</b>  | General Java objects   | Originated with EJBs          | Core concept in the Spring framework   |</li>
+                        <li>| <b>Use in the Course</b>   | Most classes           | Example class explicitly following Java Bean constraints | Objects configured and managed by Spring |</li>
+                    </ul>
+                </li>
+                <li><b>5. Importance:</b>
+                    <ul>
+                        <li><b>Java Bean Concept:</b> Less relevant in modern development, especially with the decline of Enterprise Java Beans (EJBs).</li>
+                        <li><b>Focus in the Course:</b> Emphasis on understanding POJOs and Spring Beans.</li>
+                    </ul>
+                </li>
+                <li><b>6. Conclusion:</b>
+                    <ul>
+                        <li><b>Diverse Concepts:</b> Java Bean, POJO, and Spring Bean serve different purposes in the development lifecycle.</li>
+                        <li><b>Conceptual Understanding:</b> The distinctions help developers comprehend the context of their classes and objects in various frameworks and applications.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 14 - Exploring Spring Framework Bean Auto Wiring - Primary &amp; Qualifier</b> 
+            <ul>
+                <li><b>1. Listing All Beans Managed by Spring Framework:</b>
+                    <ul>
+                        <li><b>Code Example:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">Arrays.stream(context.getBeanDefinitionNames())
+    .forEach(System.out::println);</code></pre></li>
+                            </ul>
+                        </li>
+                        <li>The <q>getBeanDefinitionNames</q> method provides an array of bean names.</li>
+                        <li>Utilized Java 8 functional programming features to print each bean name.</li>
+                    </ul>
+                </li>
+                <li><b>2. Handling Multiple Matching Beans:</b>
+                    <ul>
+                        <li><b>Scenario:</b>
+                            <ul>
+                                <li>When trying to fetch a bean by type, and multiple candidates are available, an exception is thrown.</li>
+                                <li>Address bean example: <q>context.getBean(Address.class)</q>.</li>
+                            </ul>
+                        </li>
+                        <li><b>Resolution Options:</b>
+                            <ul>
+                                <li><b>Primary Annotation:</b>
+                                    <ul>
+                                        <li>Use the <q>@Primary</q> annotation to mark one of the beans as the primary choice.</li>
+                                        <li>Example: <q>@Primary</q> on the bean definition.</li>
+                                        <li>Ensures Spring selects the primary bean when multiple candidates are present.</li>
+                                    </ul>
+                                </li>
+                                <li><b>Qualifier Annotation:</b>
+                                    <ul>
+                                        <li>Use the <q>@Qualifier</q> annotation to specify which bean to inject.</li>
+                                        <li>Example: <q>@Qualifier(&quot;address3Qualifier&quot;)</q>.</li>
+                                        <li>Provides a way to choose a specific bean among multiple candidates.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><b>Example Code:</b>
+                            <ul>
+                                <li><pre class="language-java"><code class="language-java">// Making Address3 primary
+@Primary
+@Bean
+public Address address3() {
+    return new Address(&quot;Motinagar&quot;, &quot;Hyderabad&quot;);
+}
+
+// Creating a qualified Address bean
+@Bean
+@Qualifier(&quot;address3Qualifier&quot;)
+public Address address3Qualifier() {
+    return new Address(&quot;SomeStreet&quot;, &quot;SomeCity&quot;);
+}
+
+// Using @Qualifier in another bean
+@Bean
+public Person person5(@Qualifier(&quot;address3Qualifier&quot;) Address address) {
+    return new Person(&quot;Person5&quot;, 25, address);
+}</code></pre></li>
+                            </ul>
+                        </li>
+                        <li><b>Explanation:</b>
+                            <ul>
+                                <li>Marked <q>address3</q> bean as <q>@Primary</q>.</li>
+                                <li>Created a new qualified bean <q>address3Qualifier</q>.</li>
+                                <li>Used <q>@Qualifier(&quot;address3Qualifier&quot;)</q> in another bean to specify which <q>Address</q> bean to inject.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>3. Conclusion:</b>
+                    <ul>
+                        <li><b>Listing Beans:</b>
+                            <ul>
+                                <li>Utilize <q>getBeanDefinitionNames</q> to list all beans managed by the Spring framework.</li>
+                            </ul>
+                        </li>
+                        <li><b>Handling Multiple Matching Beans:</b>
+                            <ul>
+                                <li><b>Primary Annotation:</b> Designate one bean as primary using <q>@Primary</q>.</li>
+                                <li><b>Qualifier Annotation:</b> Use <q>@Qualifier</q> to specify the exact bean when there are multiple candidates.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>4. Practical Implications:</b>
+                    <ul>
+                        <li>Understanding how to list beans helps in debugging and gaining insights into the managed objects.</li>
+                        <li>Handling multiple matching beans is crucial in scenarios where the Spring container needs guidance on choosing the right bean.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 15 - Using Spring Framework to Manage Beans for Java Gaming App</b> 
+            <ul>
+                <li><b>1. Introduction:</b>
+                    <ul>
+                        <li>Transitioning from basic Spring usage to applying knowledge in a gaming application (app 01 gaming basic Java).</li>
+                        <li>Refactoring Hello World files into a separate package (<q>HelloWorld</q>) for better project organization.</li>
+                    </ul>
+                </li>
+                <li><b>2. Addressing Resource Leak Warning:</b>
+                    <ul>
+                        <li><b>Issue:</b>
+                            <ul>
+                                <li>A warning about resource leak (<q>context</q> not closed) in <q>app02HelloWorldSpring.java</q>.</li>
+                            </ul>
+                        </li>
+                        <li><b>Solution:</b>
+                            <ul>
+                                <li>Traditional Approach:
+                                    <ul>
+                                        <li><pre class="language-java"><code class="language-java">try {
+    // existing code
+} finally {
+    context.close();
+}</code></pre></li>
+                                    </ul>
+                                </li>
+                                <li>Modern Approach (Try with Resources):
+                                    <ul>
+                                        <li><pre class="language-java"><code class="language-java">try (var context = new AnnotationConfigApplicationContext(HelloWorldConfiguration.class)) {
+    // existing code
+}</code></pre></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>3. Refactoring for Gaming Application:</b>
+                    <ul>
+                        <li>**Step 1: Move Hello World to a Separate Package (<q>HelloWorld</q>):**
+                            <ul>
+                                <li>Created a new package: <q>HelloWorld</q>.</li>
+                                <li>Moved <q>app02HelloWorldSpring.java</q> and <q>HelloWorldConfiguration.java</q> to this package.</li>
+                            </ul>
+                        </li>
+                        <li>**Step 2: Creating Gaming Configuration for Spring Beans (<q>GamingConfiguration</q>):**
+                            <ul>
+                                <li>Created a new class: <q>GamingConfiguration.java</q>.</li>
+                                <li>Annotated with <q>@Configuration</q> to specify it as a Spring configuration file.</li>
+                                <li>Defined a bean for a <q>PacManGame</q>:
+                                    <ul>
+                                        <li><pre class="language-java"><code class="language-java">@Configuration
+public class GamingConfiguration {
+    @Bean
+    public GamingConsole game() {
+        return new PacManGame();
+    }
+}</code></pre></li>
+                                    </ul>
+                                </li>
+                                <li>Utilized <q>@Bean</q> annotation to declare the bean and its creation method.</li>
+                                <li>The <q>game()</q> method returns an instance of the <q>PacManGame</q>.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>4. Using Spring Context to Launch the Game:</b>
+                    <ul>
+                        <li>**Step 3: Refactor <q>app03GamingSpringBeans.java</q>:**
+                            <ul>
+                                <li>Created a new class: <q>app03GamingSpringBeans.java</q>.</li>
+                                <li>Removed previous code and imported necessary packages.</li>
+                                <li>Utilized Spring&#39;s <q>AnnotationConfigApplicationContext</q> to create a context and fetch the <q>GamingConsole</q> bean.</li>
+                                <li>Invoked the <q>up()</q> method on the retrieved bean to run the game:
+                                    <ul>
+                                        <li><pre class="language-java"><code class="language-java">public class app03GamingSpringBeans {
+    public static void main(String[] args) {
+        try (var context = new AnnotationConfigApplicationContext(GamingConfiguration.class)) {
+            GamingConsole game = context.getBean(GamingConsole.class);
+            game.up();
+        }
+    }
+}</code></pre></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><b>Understanding the Flow:</b>
+                            <ul>
+                                <li>Created a Spring context using <q>GamingConfiguration</q>.</li>
+                                <li>Retrieved the <q>GamingConsole</q> bean from the context.</li>
+                                <li>Invoked the <q>up()</q> method on the <q>GamingConsole</q> bean to run the game.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>5. Conclusion:</b>
+                    <ul>
+                        <li>Successfully applied Spring concepts to a gaming application.</li>
+                        <li>Used Spring configuration to define beans for the game.</li>
+                        <li>Demonstrated the ability to fetch and run the game through Spring context.</li>
+                    </ul>
+                </li>
+                <li><b>6. Practical Implications:</b>
+                    <ul>
+                        <li>Understanding how to structure and organize packages for better code management.</li>
+                        <li>Applying Spring concepts in various types of applications, enhancing modularity and maintainability.</li>
+                        <li>Handling resource leaks and using Try with Resources for cleaner code.</li>
+                    </ul>
+                </li>
+                <li>Note: The instructor demonstrates refactoring and applying Spring in a gaming application, showcasing the integration of Spring features for organizing and running the game.*</li>
+            </ul>
+        </li>
+        <li><b>Step 16 - More Questions about Java Spring Framework - What will we learn?</b> 
+            <ul>
+                <li><b>1. Overview:</b>
+                    <ul>
+                        <li>Addressing questions related to Spring&#39;s object management and its impact on code complexity.</li>
+                        <li>Analyzing the role of Spring in creating and managing objects.</li>
+                    </ul>
+                </li>
+                <li><b>2. Question Five: How does Spring create objects for us?</b>
+                    <ul>
+                        <li><b>Current Scenario:</b>
+                            <ul>
+                                <li>In the gaming configuration (<q>GamingConfiguration</q>), code is manually written to create objects:
+                                    <ul>
+                                        <li><pre class="language-java"><code class="language-java">@Bean
+public GamingConsole game() {
+    return new PacManGame();
+}</code></pre></li>
+                                    </ul>
+                                </li>
+                                <li>Spring manages these objects, but the developer is responsible for their creation.</li>
+                            </ul>
+                        </li>
+                        <li><b>Answer:</b>
+                            <ul>
+                                <li>Spring facilitates object creation through annotations and configuration.</li>
+                                <li>Annotations like <q>@Component</q>, <q>@Service</q>, etc., signal Spring to manage object creation.</li>
+                                <li>Configurations, such as XML or Java-based configurations, guide Spring in creating and injecting objects.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>3. Question Six: Is Spring Making Things Easy or Complex?</b>
+                    <ul>
+                        <li><b>Comparison:</b>
+                            <ul>
+                                <li><b>Original Code (Gaming Basic Java 01):</b>
+                                    <ul>
+                                        <li>Simplicity in code, direct instantiation of objects.</li>
+                                        <li>Less external configuration.</li>
+                                    </ul>
+                                </li>
+                                <li><b>Updated Code (Gaming Spring Beans):</b>
+                                    <ul>
+                                        <li>Introduction of configuration files (<q>GamingConfiguration</q>).</li>
+                                        <li>Increased code structure for Spring bean creation.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><b>Analysis:</b>
+                            <ul>
+                                <li><b>Complexity vs. Simplicity:</b>
+                                    <ul>
+                                        <li>The simplicity of direct instantiation in basic Java code.</li>
+                                        <li>Spring introduces additional layers for configuration and management.</li>
+                                    </ul>
+                                </li>
+                                <li><b>Advantages of Spring:</b>
+                                    <ul>
+                                        <li>Enhanced modularity and organization.</li>
+                                        <li>Inversion of Control (IoC) promotes loosely coupled components.</li>
+                                        <li>Dependency Injection (DI) simplifies object collaboration.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>4. Practical Implications:</b>
+                    <ul>
+                        <li><b>Advantages of Spring:</b>
+                            <ul>
+                                <li><b>Modularity:</b>
+                                    <ul>
+                                        <li>Easy separation of concerns through organized configurations.</li>
+                                        <li>Facilitates easier modification and extension of code.</li>
+                                    </ul>
+                                </li>
+                                <li><b>IoC and DI:</b>
+                                    <ul>
+                                        <li>Reduced tight coupling between components.</li>
+                                        <li>Improved testability and maintainability.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>5. Conclusion:</b>
+                    <ul>
+                        <li>Spring&#39;s approach introduces additional complexity for improved organization and flexibility.</li>
+                        <li>Trade-off between simplicity and enhanced features provided by the Spring framework.</li>
+                        <li>Consideration of project requirements and team expertise in choosing between simplicity and Spring features.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><b>Step 17 - Exploring Spring Framework With Java - Section 1 - Review</b> 
+            <ul>
+                <li><b>1. Key Concepts Covered:</b>
+                    <ul>
+                        <li><b>Tight Coupling vs. Loose Coupling:</b>
+                            <ul>
+                                <li>Understanding the importance of reducing dependencies between components.</li>
+                                <li>Implementation of Java interfaces to achieve loose coupling.</li>
+                            </ul>
+                        </li>
+                        <li><b>Spring Container:</b>
+                            <ul>
+                                <li>Introduction to the Spring container, managing beans&#39; lifecycle.</li>
+                                <li>Configuration of the container using application context.</li>
+                            </ul>
+                        </li>
+                        <li><b>Annotations:</b>
+                            <ul>
+                                <li>Overview of fundamental Spring annotations:
+                                    <ul>
+                                        <li><q>@Configuration</q> for configuration classes.</li>
+                                        <li><q>@Bean</q> for defining beans.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><b>Auto Wiring:</b>
+                            <ul>
+                                <li>Importance and implementation of auto wiring for dependency injection.</li>
+                                <li>Handling multiple bean instances and resolving dependencies.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>2. Differentiating Java Bean and Spring Bean:</b>
+                    <ul>
+                        <li>Explanation of the distinctions between a Java bean and a Spring bean.</li>
+                        <li>Emphasis on the constraints of a Java bean (constructor, getters/setters, serializable).</li>
+                        <li>Definition of a Spring bean as an object managed by the Spring framework.</li>
+                    </ul>
+                </li>
+                <li><b>3. Auto Wiring:</b>
+                    <ul>
+                        <li>A crucial concept for managing dependencies and injecting objects.</li>
+                        <li>Handling scenarios with multiple matching beans.</li>
+                        <li>Use of <q>@Primary</q> and <q>@Qualifier</q> annotations for resolving ambiguity.</li>
+                    </ul>
+                </li>
+                <li><b>4. Looking Ahead:</b>
+                    <ul>
+                        <li><b>Future Learning Objectives:</b>
+                            <ul>
+                                <li>Simplifying code in the upcoming section.</li>
+                                <li>Delving into additional Spring annotations (<q>@Component</q>, <q>@Primary</q>, <q>@Qualifier</q>).</li>
+                                <li>In-depth understanding of dependency injection.</li>
+                                <li>Exploration of real-world examples with Spring.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>5. Instructor&#39;s Perspective:</b>
+                    <ul>
+                        <li>Importance of mastering Spring for application design and debugging.</li>
+                        <li>The commitment to delivering a visual and hands-on learning experience.</li>
+                        <li>Encouragement for learners to grasp not only the basics but also complex concepts for becoming proficient developers.</li>
+                    </ul>
+                </li>
+                <li><b>6. What&#39;s Next:</b>
+                    <ul>
+                        <li>Upcoming Section Focus:
+                            <ul>
+                                <li>Simplification of code for bean creation.</li>
+                                <li>Exploration of advanced Spring annotations (<q>@Component</q>, <q>@Primary</q>, <q>@Qualifier</q>).</li>
+                                <li>Comprehensive understanding of dependency injection types.</li>
+                                <li>Real-world application examples using Spring.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>7. Learner Engagement:</b>
+                    <ul>
+                        <li>Encouragement for learners to be excited about the upcoming learning journey.</li>
+                        <li>Acknowledgment of the ongoing learning experience.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Keywords
+            <ul>
+                <li>1. <b>Java Spring Framework:</b> A comprehensive framework for Java that facilitates the development of robust, scalable, and loosely coupled enterprise applications.</li>
+                <li>2. <b>Maven:</b> A build automation and project management tool used for managing the build lifecycle of a software project, including dependencies.</li>
+                <li>3. <b>Java Gaming Application:</b> An application related to game development using the Java programming language, likely incorporating the Spring Framework for various functionalities.</li>
+                <li>4. <b>Loose Coupling:</b> A design principle in software development where components are independent and interact through well-defined interfaces, reducing dependencies.</li>
+                <li>5. <b>Tight Coupling:</b> The opposite of loose coupling, where components are highly dependent on each other, making the system less flexible and harder to maintain.</li>
+                <li>6. <b>Java Interface:</b> A programming construct that defines a set of method signatures without providing an implementation. Used for achieving abstraction and enabling loose coupling.</li>
+                <li>7. <b>Spring Framework:</b> An open-source framework for building Java-based enterprise applications, emphasizing on inversion of control (IoC) and aspect-oriented programming (AOP).</li>
+                <li>8. <b>Java Spring Bean:</b> A Java object managed by the Spring IoC container. It is configured and initialized by the container to provide specific functionalities.</li>
+                <li>9. <b>Java Configuration File:</b> A file, often written in Java code, used to configure the Spring IoC container and define the relationships between beans.</li>
+                <li>10. <b>Auto Wiring:</b> A feature in the Spring Framework that allows automatic injection of dependencies between beans, reducing the need for explicit configuration.</li>
+                <li>11. <b>Spring IOC Container:</b> The core of the Spring Framework responsible for managing the lifecycle of Java objects (beans) and providing inversion of control.</li>
+                <li>12. <b>Application Context:</b> A container for managing beans in a Spring application, providing additional functionality beyond the BeanFactory, such as event propagation and application-layer-specific contexts.</li>
+                <li>13. <b>Bean Factory:</b> Part of the Spring IOC container responsible for managing and controlling the lifecycle of beans in a Spring application.</li>
+                <li>14. <b>Java Bean:</b> A reusable software component that follows specific conventions, making it easy to integrate into various applications.</li>
+                <li>15. <b>POJO (Plain Old Java Object):</b> A Java object that does not depend on any framework, making it simple and easy to understand.</li>
+                <li>16. <b>Spring Bean Auto Wiring:</b> The process of automatically connecting the dependencies between Spring beans.</li>
+                <li>17. <b>Primary:</b> An annotation in Spring used to indicate the primary bean when multiple candidates of the same type exist.</li>
+                <li>18. <b>Qualifier:</b> An annotation in Spring used to disambiguate which bean should be injected when multiple beans of the same type exist.</li>
+                <li>19. <b>Managing Beans:</b> The process of organizing, configuring, and controlling the lifecycle of beans in a Spring application.</li>
+                <li></li>
+            </ul>
+        </li>
+
+    </ul>
+    </body>
+</html>
